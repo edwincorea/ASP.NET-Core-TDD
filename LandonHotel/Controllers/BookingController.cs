@@ -1,5 +1,4 @@
 ﻿using System;
-using LandonHotel.Data;
 using LandonHotel.Models;
 using LandonHotel.Services;
 using Microsoft.AspNetCore.Mvc;
