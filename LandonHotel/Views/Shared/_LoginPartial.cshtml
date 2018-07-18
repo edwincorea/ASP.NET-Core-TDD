@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using LandonHotel.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<LandonHotel.Models.ApplicationUser> SignInManager
+@inject UserManager<LandonHotel.Models.ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
