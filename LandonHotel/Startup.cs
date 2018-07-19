@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LandonHotel.Services;
 using LandonHotel.Repositories;
+using LandonHotel.Services;
 
 namespace LandonHotel
 {
@@ -33,11 +33,13 @@ namespace LandonHotel
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddTransient<IRoomsRepository, RoomsRepository>();
+            services.AddTransient<ICouponRepository, CouponRepository>();
+
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IBookingService, BookingService>();
 
-            services.AddTransient<IRoomsRepository, RoomsRepository>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

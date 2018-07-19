@@ -24,8 +24,7 @@ namespace LandonHotel.Controllers
             {
                 CheckInDate = DateTime.Now,
                 CheckOutDate = DateTime.Now.AddDays(1),
-                Rooms = roomService.GetAllRooms(),
-                NumberOfGuests = 1
+                Rooms = roomService.GetAllRooms()
             };
             return View(model);
         }
@@ -33,26 +32,27 @@ namespace LandonHotel.Controllers
         [HttpPost]
         public IActionResult Index(BookingViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var booking = new Booking()
-                {
-                    CheckInDate = model.CheckInDate,
-                    CheckOutDate = model.CheckOutDate,
-                    HasPets = model.BringingPets,
-                    IsSmoking = model.IsSmoking,
-                };
+                model.Rooms = roomService.GetAllRooms();
+                ViewBag.ErrorMessage = "Booking was not valid";
 
-                if (bookingService.IsBookingValid(model.RoomId, booking))
-                {
-                    return View("Success");
-                }
+                return View("Index", model);
             }
 
-            model.Rooms = roomService.GetAllRooms();
-            ViewBag.ErrorMessage = "Booking was not valid";
+            var booking = new Booking()
+            {
+                CheckInDate = model.CheckInDate,
+                CheckOutDate = model.CheckOutDate,
+                RoomId = model.RoomId
+            };
 
-            return View("Index", model);
+            return View("Success",
+                new BookingSuccessViewModel
+                {
+                    Price = bookingService.CalculateBookingPrice(booking)
+                });
+
         }
     }
 }
