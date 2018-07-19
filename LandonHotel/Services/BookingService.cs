@@ -1,5 +1,6 @@
 ﻿using LandonHotel.Data;
 using LandonHotel.Repositories;
+using Remotion.Linq.Utilities;
 
 namespace LandonHotel.Services
 {
@@ -24,7 +25,6 @@ namespace LandonHotel.Services
             if (booking.CouponCode != null)
             {
                 var discount = _couponRepo.GetCoupon(booking.CouponCode).PercentageDiscount;
-
                 price = price - (price * discount / 100);
             }
 

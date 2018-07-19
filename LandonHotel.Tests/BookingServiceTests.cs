@@ -41,16 +41,12 @@ namespace LandonHotel.Tests
             var service = Subject();
 
             roomRepo.Setup(r => r.GetRoom(1)).Returns(new Room { Rate = 250 });
-            couponRepo.Setup(c => c.GetCoupon("10OFF")).Returns(new Coupon { PercentageDiscount = 10});
+            couponRepo.Setup(r => r.GetCoupon("10OFF")).Returns(new Coupon() {PercentageDiscount = 10});
 
-            var price = service.CalculateBookingPrice(new Booking {
-                RoomId = 1,
-                CheckInDate = DateTime.Now,
-                CheckOutDate = DateTime.Now.AddDays(2),
-                CouponCode = "10OFF"
-            });
+            var price = service.CalculateBookingPrice(new Booking { RoomId = 1, CheckInDate = DateTime.Now, CheckOutDate = DateTime.Now.AddDays(2), CouponCode = "10OFF"});
 
             Assert.Equal(450, price);
         }
+
     }
 }

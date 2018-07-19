@@ -44,7 +44,8 @@ namespace LandonHotel.Controllers
             {
                 CheckInDate = model.CheckInDate,
                 CheckOutDate = model.CheckOutDate,
-                RoomId = model.RoomId
+                RoomId = model.RoomId,
+                CouponCode = model.CouponCode
             };
 
             return View("Success",
