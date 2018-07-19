@@ -30,7 +30,28 @@ namespace LandonHotel.Tests
 
             roomRepo.Setup(r => r.GetRoom(1)).Returns(new Room { Rate = 250 });
 
-            var price = service.CalculateBookingPrice(new Booking { RoomId = 1, CheckInDate = DateTime.Now, CheckOutDate = DateTime.Now.AddDays(2) });
+            var price = service.CalculateBookingPrice(new Booking {
+                RoomId = 1,
+                CheckInDate = DateTime.Now,
+                CheckOutDate = DateTime.Now.AddDays(2)
+            });
+
+            Assert.Equal(500, price);
+        }
+
+        [Fact]
+        public void CalculateBookingPrice_CalculatesCorrectly_WithEmptyCouponCode()
+        {
+            var service = Subject();
+
+            roomRepo.Setup(r => r.GetRoom(1)).Returns(new Room { Rate = 250 });
+
+            var price = service.CalculateBookingPrice(new Booking {
+                RoomId = 1,
+                CheckInDate = DateTime.Now,
+                CheckOutDate = DateTime.Now.AddDays(2),
+                CouponCode = string.Empty
+            });
 
             Assert.Equal(500, price);
         }

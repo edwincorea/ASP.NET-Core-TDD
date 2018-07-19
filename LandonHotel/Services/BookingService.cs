@@ -1,6 +1,5 @@
 ﻿using LandonHotel.Data;
 using LandonHotel.Repositories;
-using Remotion.Linq.Utilities;
 
 namespace LandonHotel.Services
 {
@@ -22,11 +21,10 @@ namespace LandonHotel.Services
             var numberOfNights = (booking.CheckOutDate - booking.CheckInDate).Days;
             var price = room.Rate * numberOfNights;
 
-            if (booking.CouponCode != null)
-            {
-                var discount = _couponRepo.GetCoupon(booking.CouponCode).PercentageDiscount;
-                price = price - (price * discount / 100);
-            }
+            if (string.IsNullOrEmpty(booking.CouponCode)) return price;
+            
+            var discount = _couponRepo.GetCoupon(booking.CouponCode).PercentageDiscount;
+            price = price - (price * discount / 100);            
 
             return price;
         }
